@@ -39,7 +39,7 @@
     "prettier-standard-formatter": "^0.222222222222222.333333333333333",
     "proxyquire": "^1.7.10",
     "simple-mock": "^0.8.0",
-    "standard": "^10.0.2",
+    "standard": "^11.0.0",
     "tap": "^11.0.1"
   },
   "engines": {
