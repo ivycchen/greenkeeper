@@ -6,6 +6,11 @@ describe('marketplace purchased', async () => {
   beforeAll(() => {
     jest.setTimeout(20000)
   })
+  afterAll(async () => {
+    const { payments } = await dbs()
+    await removeIfExists(payments, '444', '445', '446', '447', '448')
+  })
+
   test('create entry in payments database', async () => {
     const { payments } = await dbs()
 
@@ -198,10 +203,5 @@ describe('marketplace purchased', async () => {
 
     const payment = await payments.get('448')
     expect(payment.plan).toEqual('opensource')
-  })
-
-  afterAll(async () => {
-    const { payments } = await dbs()
-    await removeIfExists(payments, '444', '445', '446', '447', '448')
   })
 })

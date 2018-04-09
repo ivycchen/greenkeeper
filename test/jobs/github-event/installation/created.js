@@ -7,6 +7,16 @@ const createInstallation = require('../../../../jobs/github-event/installation/c
 
 jest.setTimeout(10000)
 
+afterAll(async () => {
+  const { installations, repositories } = await dbs()
+
+  await Promise.all([
+    removeIfExists(installations, '2'),
+    removeIfExists(repositories, '123', '234')
+  ])
+  require('../../../../lib/statsd').close()
+})
+
 test('github-event installation created', async () => {
   const { installations, repositories } = await dbs()
   nock('https://api.github.com')
@@ -76,14 +86,4 @@ test('github-event installation created', async () => {
   expect(doc.installation).toBe(1)
   expect(doc.login).toBe('bar')
   expect(doc.type).toBe('baz')
-})
-
-afterAll(async () => {
-  const { installations, repositories } = await dbs()
-
-  await Promise.all([
-    removeIfExists(installations, '2'),
-    removeIfExists(repositories, '123', '234')
-  ])
-  require('../../../../lib/statsd').close()
 })
